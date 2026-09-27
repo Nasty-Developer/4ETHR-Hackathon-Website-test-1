@@ -10,6 +10,8 @@ import {
   X,
 } from 'lucide-react';
 import tanviPhoto from '@assets/6db3c863-775e-4157-a45c-900335789db5_1790538098467.jpg';
+import sharanyaVisual from '@assets/generated_images/4ethr-signal-sharanya.png';
+import yashVisual from '@assets/generated_images/4ethr-signal-yash.png';
 
 type SectionId = 'home' | 'about' | 'team' | 'projects' | 'skills' | 'contact';
 
@@ -29,6 +31,7 @@ const team = [
     name: 'Tanvi Tapase',
     initials: 'TT',
     image: tanviPhoto,
+    visual: '',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Tanvi’s point of view, craft, and the kind of questions she brings to a room.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -37,6 +40,7 @@ const team = [
     name: 'Sharanya Mestry',
     initials: 'SM',
     image: '',
+    visual: sharanyaVisual,
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Sharanya’s practice, curiosities, and what she is building toward.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -45,6 +49,7 @@ const team = [
     name: 'Yash Kharat',
     initials: 'YK',
     image: '',
+    visual: yashVisual,
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Yash’s lens, technical interests, and role within the team.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -334,6 +339,12 @@ function App() {
                     {member.image ? <img src={member.image} alt={`${member.name} portrait`} /> : member.initials}
                   </span>
                 </div>
+                {member.visual && (
+                  <div className="member-visual" aria-label={`${member.name} AI visual placeholder`}>
+                    <img src={member.visual} alt="" loading="lazy" />
+                    <span className="member-visual-note mono">AI visual / editable</span>
+                  </div>
+                )}
                 <div className="member-mid" aria-hidden="true">
                   <span className="member-mid-label mono">Member node / 0{index + 1}</span>
                 </div>

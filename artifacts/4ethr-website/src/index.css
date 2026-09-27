@@ -33,30 +33,30 @@
 }
 
 .dark {
-  --background: 225 33% 10%;
+  --background: 225 34% 5%;
   --foreground: 42 27% 93%;
-  --border: 225 20% 24%;
-  --card: 225 29% 14%;
+  --border: 225 20% 18%;
+  --card: 225 31% 8%;
   --card-foreground: 42 27% 93%;
-  --card-border: 225 20% 25%;
-  --primary: 171 27% 77%;
-  --primary-foreground: 225 33% 10%;
-  --secondary: 226 29% 22%;
+  --card-border: 225 20% 19%;
+  --primary: 225 38% 7%;
+  --primary-foreground: 42 27% 93%;
+  --secondary: 171 26% 16%;
   --secondary-foreground: 42 27% 93%;
-  --muted: 225 25% 18%;
+  --muted: 225 27% 9%;
   --muted-foreground: 42 12% 65%;
   --accent: 11 77% 62%;
-  --accent-foreground: 225 33% 10%;
+  --accent-foreground: 225 38% 7%;
   --destructive: 4 74% 58%;
   --destructive-foreground: 42 27% 93%;
-  --input: 225 20% 29%;
+  --input: 225 20% 23%;
   --ring: 11 77% 62%;
-  --sidebar: 225 33% 8%;
+  --sidebar: 225 38% 4%;
   --sidebar-foreground: 42 27% 93%;
-  --sidebar-border: 225 20% 19%;
+  --sidebar-border: 225 20% 14%;
   --sidebar-primary: 11 77% 62%;
-  --sidebar-primary-foreground: 225 33% 10%;
-  --sidebar-accent: 225 25% 18%;
+  --sidebar-primary-foreground: 225 38% 7%;
+  --sidebar-accent: 225 27% 12%;
   --sidebar-accent-foreground: 42 27% 93%;
   --sidebar-ring: 11 77% 62%;
 }
@@ -203,6 +203,10 @@ a { color: inherit; text-decoration: none; }
 .member-portrait img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .member-card:nth-child(2) .member-portrait { border-color: hsl(var(--secondary)); color: hsl(var(--secondary)); }
 .member-card:nth-child(3) .member-portrait { border-color: hsl(var(--primary)); color: hsl(var(--primary)); }
+.member-visual { position: relative; min-height: 92px; overflow: hidden; border: 1px solid currentColor; background: hsl(var(--primary) / .24); }
+.member-visual img { width: 100%; height: 100%; min-height: 92px; display: block; object-fit: cover; opacity: .82; filter: saturate(.82) contrast(1.08); }
+.member-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 35%, hsl(var(--accent) / .18)); pointer-events: none; }
+.member-visual-note { position: absolute; z-index: 1; right: 10px; bottom: 8px; color: hsl(var(--foreground) / .76); font-size: .55rem; letter-spacing: .08em; text-transform: uppercase; }
 .member-mid { display: flex; align-items: center; gap: 12px; color: currentColor; opacity: .36; }
 .member-mid::before, .member-mid::after { content: ''; flex: 1; height: 1px; background: currentColor; }
 .member-mid-label { font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
