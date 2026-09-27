@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "4ETHR Hackathon Website"
+description = "A frontend-only React portfolio for the 4ETHR hackathon team, built around collaboration, experimentation, and one shared digital universe."
+version = "1.0.0"
+id = "artifacts/4ethr-website"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21802
+
+[services.development]
+run = "pnpm --filter @workspace/4ethr-website run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/4ethr-website", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/4ethr-website/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21802"
+BASE_PATH = "/"
