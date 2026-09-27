@@ -9,6 +9,7 @@ import {
   Sun,
   X,
 } from 'lucide-react';
+import tanviPhoto from '@assets/6db3c863-775e-4157-a45c-900335789db5_1790538098467.jpg';
 
 type SectionId = 'home' | 'about' | 'team' | 'projects' | 'skills' | 'contact';
 
@@ -27,6 +28,7 @@ const team = [
   {
     name: 'Tanvi Tapase',
     initials: 'TT',
+    image: tanviPhoto,
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Tanvi’s point of view, craft, and the kind of questions she brings to a room.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -34,6 +36,7 @@ const team = [
   {
     name: 'Sharanya Mestry',
     initials: 'SM',
+    image: '',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Sharanya’s practice, curiosities, and what she is building toward.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -41,6 +44,7 @@ const team = [
   {
     name: 'Yash Kharat',
     initials: 'YK',
+    image: '',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Yash’s lens, technical interests, and role within the team.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -326,7 +330,9 @@ function App() {
               >
                 <div className="member-top">
                   <span className="member-number">0{index + 1}</span>
-                  <span className="member-portrait" aria-label={`${member.name} avatar placeholder`}>{member.initials}</span>
+                  <span className={`member-portrait ${member.image ? 'has-image' : ''}`} aria-label={`${member.name} avatar placeholder`}>
+                    {member.image ? <img src={member.image} alt={`${member.name} portrait`} /> : member.initials}
+                  </span>
                 </div>
                 <div className="member-bottom">
                   <h3>{member.name}</h3>
