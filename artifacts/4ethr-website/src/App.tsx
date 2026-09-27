@@ -334,6 +334,9 @@ function App() {
                     {member.image ? <img src={member.image} alt={`${member.name} portrait`} /> : member.initials}
                   </span>
                 </div>
+                <div className="member-mid" aria-hidden="true">
+                  <span className="member-mid-label mono">Member node / 0{index + 1}</span>
+                </div>
                 <div className="member-bottom">
                   <h3>{member.name}</h3>
                   <div className="member-role">{member.role}</div>
