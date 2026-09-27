@@ -31,7 +31,9 @@ const team = [
     name: 'Tanvi Tapase',
     initials: 'TT',
     image: tanviPhoto,
-    visual: '',
+    visual: tanviPhoto,
+    visualAlt: 'Portrait of Tanvi Tapase',
+    visualLabel: 'Portrait / uploaded',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Tanvi’s point of view, craft, and the kind of questions she brings to a room.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -41,6 +43,8 @@ const team = [
     initials: 'SM',
     image: '',
     visual: sharanyaVisual,
+    visualAlt: 'Abstract AI visual placeholder for Sharanya Mestry',
+    visualLabel: 'AI visual / editable',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Sharanya’s practice, curiosities, and what she is building toward.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -50,6 +54,8 @@ const team = [
     initials: 'YK',
     image: '',
     visual: yashVisual,
+    visualAlt: 'Abstract AI visual placeholder for Yash Kharat',
+    visualLabel: 'AI visual / editable',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Yash’s lens, technical interests, and role within the team.',
     skills: ['Skill to add', 'Skill to add', 'Skill to add'],
@@ -340,9 +346,9 @@ function App() {
                   </span>
                 </div>
                 {member.visual && (
-                  <div className="member-visual" aria-label={`${member.name} AI visual placeholder`}>
-                    <img src={member.visual} alt="" loading="lazy" />
-                    <span className="member-visual-note mono">AI visual / editable</span>
+                  <div className="member-visual" aria-label={`${member.visualLabel} for ${member.name}`}>
+                    <img src={member.visual} alt={member.visualAlt} loading="lazy" />
+                    <span className="member-visual-note mono">{member.visualLabel}</span>
                   </div>
                 )}
                 <div className="member-mid" aria-hidden="true">
