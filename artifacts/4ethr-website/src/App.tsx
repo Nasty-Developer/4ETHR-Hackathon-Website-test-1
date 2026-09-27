@@ -13,6 +13,7 @@ import {
 type SectionId = 'home' | 'about' | 'team' | 'projects' | 'skills' | 'contact';
 
 const navItems: Array<{ id: SectionId; label: string }> = [
+  { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
   { id: 'team', label: 'Team' },
   { id: 'projects', label: 'Projects' },
@@ -28,18 +29,21 @@ const team = [
     initials: 'TT',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Tanvi’s point of view, craft, and the kind of questions she brings to a room.',
+    skills: ['Skill to add', 'Skill to add', 'Skill to add'],
   },
   {
     name: 'Sharanya Mestry',
     initials: 'SM',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Sharanya’s practice, curiosities, and what she is building toward.',
+    skills: ['Skill to add', 'Skill to add', 'Skill to add'],
   },
   {
     name: 'Yash Kharat',
     initials: 'YK',
     role: 'Focus area placeholder',
     bio: 'Bio placeholder — add Yash’s lens, technical interests, and role within the team.',
+    skills: ['Skill to add', 'Skill to add', 'Skill to add'],
   },
 ];
 
@@ -49,18 +53,33 @@ const projects = [
     name: 'Project title to add',
     details: 'Project description placeholder — add the problem, approach, and current status.',
     status: 'Details to be added',
+    technologies: ['Technology to add'],
+    image: '',
+    imageAlt: 'Project visual placeholder',
+    github: '',
+    live: '',
   },
   {
     number: '02',
     name: 'Project title to add',
     details: 'Project description placeholder — add the question this work explores and where it is now.',
     status: 'Details to be added',
+    technologies: ['Technology to add'],
+    image: '',
+    imageAlt: 'Project visual placeholder',
+    github: '',
+    live: '',
   },
   {
     number: '03',
     name: 'Project title to add',
     details: 'Project description placeholder — add links, contribution notes, or a short walkthrough.',
     status: 'Details to be added',
+    technologies: ['Technology to add'],
+    image: '',
+    imageAlt: 'Project visual placeholder',
+    github: '',
+    live: '',
   },
 ];
 
@@ -75,6 +94,14 @@ const skills = [
   'Skill / tool to add',
 ];
 
+const socialLinks = [
+  { label: 'Email', value: 'hello@your-contact-placeholder.com', href: '' },
+  { label: 'GitHub', value: 'GitHub link to add', href: '' },
+  { label: 'LinkedIn', value: 'LinkedIn link to add', href: '' },
+  { label: 'Instagram', value: 'Instagram link to add', href: '' },
+  { label: 'Other', value: 'Other social link to add', href: '' },
+];
+
 function scrollToSection(id: SectionId) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -83,9 +110,12 @@ function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedMember, setSelectedMember] = useState<number | null>(null);
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return window.localStorage.getItem('4ethr-theme') === 'dark';
+    const storedTheme = window.localStorage.getItem('4ethr-theme');
+    return storedTheme === null ? true : storedTheme === 'dark';
   });
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -95,6 +125,11 @@ function App() {
     document.documentElement.classList.toggle('dark', darkMode);
     window.localStorage.setItem('4ethr-theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 720);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -145,6 +180,13 @@ function App() {
 
   return (
     <main className="site-shell">
+      {isLoading && (
+        <div className="loading-screen" role="status" aria-live="polite">
+          <span className="loading-mark">4E</span>
+          <span className="loading-line" />
+          <span className="loading-label mono">Mapping the universe</span>
+        </div>
+      )}
       <header className={`nav-wrap ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav">
           <a className="brand" href="#home" data-testid="link-brand" onClick={() => setMenuOpen(false)}>
@@ -197,6 +239,7 @@ function App() {
               {tagline} A creative technology team making space for
               sharper questions, better systems, and work that feels unmistakably ours.
             </p>
+            <p className="hero-teamline mono reveal delay-2">Tanvi Tapase × Sharanya Mestry × Yash Kharat</p>
             <div className="hero-cta-row reveal delay-3">
               <button className="button-primary" type="button" data-testid="button-explore" onClick={() => scrollToSection('projects')}>
                 Explore the work <ArrowDown size={15} />
@@ -265,15 +308,33 @@ function App() {
           </div>
           <div className="team-grid">
             {team.map((member, index) => (
-              <article className="member-card" data-initials={member.initials} key={member.name} data-testid={`card-member-${index}`}>
+              <article
+                className={`member-card ${selectedMember === index ? 'selected' : ''}`}
+                data-initials={member.initials}
+                key={member.name}
+                data-testid={`card-member-${index}`}
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedMember === index}
+                onClick={() => setSelectedMember(selectedMember === index ? null : index)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setSelectedMember(selectedMember === index ? null : index);
+                  }
+                }}
+              >
                 <div className="member-top">
                   <span className="member-number">0{index + 1}</span>
-                  <span className="member-portrait" aria-hidden="true">{member.initials}</span>
+                  <span className="member-portrait" aria-label={`${member.name} avatar placeholder`}>{member.initials}</span>
                 </div>
                 <div className="member-bottom">
                   <h3>{member.name}</h3>
                   <div className="member-role">{member.role}</div>
                   <p className="member-bio">{member.bio}</p>
+                  <div className="member-skills" aria-label={`${member.name} skills`}>
+                    {member.skills.map((skill, skillIndex) => <span key={`${skill}-${skillIndex}`}>{skill}</span>)}
+                  </div>
                 </div>
               </article>
             ))}
@@ -294,8 +355,21 @@ function App() {
             {projects.map((project) => (
               <article className="project-row" key={project.number} data-testid={`row-project-${project.number}`}>
                 <span className="project-number">{project.number}</span>
-                <span className="project-title display">{project.name}</span>
-                <span className="project-status">{project.details}<br /><span className="mono">{project.status}</span></span>
+                <div className="project-visual" aria-label={project.image ? project.imageAlt : `${project.name} visual placeholder`}>
+                  {project.image ? <img src={project.image} alt={project.imageAlt} loading="lazy" /> : <span className="mono">Visual to add</span>}
+                </div>
+                <div className="project-main">
+                  <div className="project-heading">
+                    <span className="project-title display">{project.name}</span>
+                    <div className="project-links">
+                      {project.github ? <a href={project.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13} /></a> : <span>GitHub link to add</span>}
+                      {project.live ? <a href={project.live} target="_blank" rel="noreferrer">Live link <ArrowUpRight size={13} /></a> : <span>Live link to add</span>}
+                    </div>
+                  </div>
+                  <p className="project-details">{project.details}</p>
+                  <div className="project-tech mono">{project.technologies.join(' / ')}</div>
+                  <span className="project-status mono">{project.status}</span>
+                </div>
                 <span className="project-arrow" aria-hidden="true"><ArrowUpRight size={16} /></span>
               </article>
             ))}
@@ -333,7 +407,7 @@ function App() {
           <div className="section-heading">
             <div>
               <div className="eyebrow">05 / Open channel</div>
-              <h2 className="display">Let’s make<br /><em>the next signal.</em></h2>
+              <h2 className="display">Let’s build<br /><em>something.</em></h2>
             </div>
             <p>Have a question, an unfinished idea, or a problem worth sitting with? Send a note. This form is a frontend-only contact surface for now.</p>
           </div>
@@ -341,7 +415,13 @@ function App() {
             <div className="contact-copy">
               <h3 className="display">The door is<br /><em>open.</em></h3>
               <p>Add the team’s preferred email, social links, or availability here when those details are ready.</p>
-              <span className="contact-detail">hello@your-contact-placeholder.com</span>
+              <div className="social-links" aria-label="4ETHR contact links">
+                {socialLinks.map((link) => (
+                  link.href
+                    ? <a className="social-link" key={link.label} href={link.href} target="_blank" rel="noreferrer"><span>{link.label}</span><span>{link.value}</span><ArrowUpRight size={13} /></a>
+                    : <span className="social-link is-placeholder" key={link.label}><span>{link.label}</span><span>{link.value}</span></span>
+                ))}
+              </div>
             </div>
             {submitted ? (
               <div className="success-message" data-testid="status-contact-success">
